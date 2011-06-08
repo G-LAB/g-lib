@@ -16,9 +16,9 @@ class Sitemap {
 	
 	}
 	
-	function getHierarchy () {
+	function getHierarchy ($titleSort=false) {
 		
-		$this->CI->load->helper('directory');
+		$this->CI->load->helper(array('url', 'glib_directory', 'inflector'));
 		
 		$pathBase = realpath(APPPATH.'controllers'); 
 		$pathThis = __FILE__;
@@ -27,22 +27,28 @@ class Sitemap {
 			if (
 				($pathController != $pathThis) 
 				&& (!strpos($pathController, 'index.html')) 
-				&& (!strpos($pathController, 'sso'))
 			) { 
 				// Make Path Relative to Web Root
-				$controller = substr($pathController, strlen($pathBase) + 1 , -4 );
+				$controller = rtrim(substr($pathController, strlen($pathBase) + 1 , -4 ), '/');
 				
 				// Clean The Default Controllers From The List
 				$defaultController = $GLOBALS["CI"]->router->routes["default_controller"];
 				if (strpos($controller,$defaultController)) $controller = 
-					preg_replace("/$defaultController/i", "", $controller);
+					preg_replace("/\/$defaultController/i", "", $controller);
 				elseif ($controller == $defaultController) $controller = '/';
 				
 				// Send As Output If Not a Private Controller
-				if ($controller[0] != '_') {
+				if (substr($controller, 0, 1) != '_') {
+					
+					// Set The Title
+					if ($controller == '/') {
+						$title = 'Home';
+					} else {
+						$title = humanize(ltrim(substr($controller, strrpos($controller, '/')), '/'));
+					}
 					
 					// Add The Directory
-					$data[] = $controller;
+					$data["$controller"] = $title;
 					
 					// Get The Methods When Necessary
 					if (!strpos($pathController, $defaultController.'.php')) {
@@ -52,13 +58,18 @@ class Sitemap {
 						else $className = substr($controller, strripos($controller, '/') + 1);
 
 						$methods = $this->getMethods(ucfirst($className));
-						foreach ($methods as $method) if ($method != 'index') $data[] = "$controller/$method";
+						foreach ($methods as $method) if ($method != 'index') {
+							$data["$controller"] = $title;
+						}
 					}
 					
 				}
 					 
 			}
 		}
+		
+		if ($titleSort) asort($data);
+		else ksort($data);
 		
 		return $data;
 		
