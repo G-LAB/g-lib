@@ -22,7 +22,8 @@ function phone_format($phone = '')
 	
 }
 
-function phone_strip ($phone) {
+function phone_strip ($phone) 
+{
 	
 	// REMOVE US (1) PREFIX IF NOT LOCAL EXT
 	if (strlen($phone) > 4) $phone = ltrim($phone,'1');
@@ -135,7 +136,8 @@ function number_word_format($num, $c=1)
     return $s;
 }
 
-function number_roman_format ($num) {
+function number_roman_format ($num) 
+{
 	$n = intval($num);
 	$res = '';
 	
@@ -171,8 +173,14 @@ function number_roman_format ($num) {
 	return $res;
 }
 
-function leading_zeroes($str, $length=5){
+function leading_zeroes($str, $length=5)
+{
     return str_pad($str, $length, '0', STR_PAD_LEFT);
+}
+
+function is_hex($str)
+{
+	return ctype_xdigit($str);
 }
 
 // End of File
