@@ -1,6 +1,9 @@
 <?php
 
-function is_email($str) {
+function is_email($str)
+{
+    $CI =& get_instance();
+    $CI->form_validation->set_message('is_email', '%s must be a valid email address.');
     if (
     	strlen($str) <= 256
     	&& preg_match('/([A-Z0-9._%+-]+)@([A-Z0-9.-]+\.[A-Z]{2,4})/i',$str,$part)
@@ -16,7 +19,25 @@ function is_email($str) {
     }
 }
 
-function min_value ($val,$min) {
+function is_tel($str)
+{
+	if (preg_match('/^\+[\d]{1,3}[\(\)\d\.a-z]+$/i', $str))
+	{
+		return true;
+	}
+	elseif (preg_match('/^[\(]?[2-9]{1}[\d]{2}[\-\)\.]?[\da-z]{3}[\-\.]?[\da-z]{4}$/i', $str))
+	{
+		return true;
+	}
+	else
+	{
+		$CI->form_validation->set_message('is_tel', '%s must be a valid, 10-digit, U.S. phone number or an international number beginning with a plus sign and country code.');
+		return false;
+	}
+}
+
+function min_value ($val,$min)
+{
 	settype($min, "float");
 	$CI =& get_instance();
 	$CI->form_validation->set_message('min_value', '%s must be at least '.$min.'.');
@@ -24,7 +45,8 @@ function min_value ($val,$min) {
 	else return FALSE;
 }
 
-function max_value ($val,$max) {
+function max_value ($val,$max)
+{
 	settype($max, "float");
 	$CI =& get_instance();
 	$CI->form_validation->set_message('max_value', '%s must not exceed '.$max.'.');

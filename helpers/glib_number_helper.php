@@ -1,54 +1,5 @@
 <?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-function phone_format($phone = '')
-{
-	// If we have not entered a phone number just return empty
-	if (empty($phone)) {
-		return '';
-	}
-	
-	// Strip out any extra characters that we do not need only keep letters and numbers
-	$phone = preg_replace("/[^0-9A-Za-z]/", "", $phone);						 
-	
-	// FORMAT
-	if (strlen($phone) == 10) {
-		$num = preg_replace("/([0-9a-zA-Z]{3})([0-9a-zA-Z]{3})([0-9a-zA-Z]{4})/", "$1.$2.$3", $phone);
-	} elseif (strlen($phone) > 10) {
-		$num = preg_replace("/([0-9a-zA-Z]{1})([0-9a-zA-Z]{3})([0-9a-zA-Z]{3})([0-9a-zA-Z]+)/", "+$1 $2.$3.$4", $phone);
-	} else $num = $phone;
-	
-	// RETURN
-	return $num;
-	
-}
-
-function phone_strip ($phone) 
-{
-	
-	// REMOVE US (1) PREFIX IF NOT LOCAL EXT
-	if (strlen($phone) > 4) $phone = ltrim($phone,'1');
-	
-	// SANITIZE
-	$phone = preg_replace("/[^0-9A-Za-z\*]/", "", $phone);
-	
-	// CONVERT LETTERS TO NUMBERS
-	$replace = array(	'2'=>array('a','b','c'),
-			 			'3'=>array('d','e','f'),
-		         		'4'=>array('g','h','i'),
-			 			'5'=>array('j','k','l'),
-                      '6'=>array('m','n','o'),
-			 			'7'=>array('p','q','r','s'),
-			 			'8'=>array('t','u','v'),
-			 			'9'=>array('w','x','y','z'));
-	// Replace each letter with a number
-	// Notice this is case insensitive with the str_ireplace instead of str_replace 
-	foreach($replace as $digit=>$letters) {
-		$phone = str_ireplace($letters, $digit, $phone);
-	}
-	
-	return substr($phone, 0, 10);
-}
-
 function number_word_format($num, $c=1) 
 {
 	// Digits and Periods Only
