@@ -3,6 +3,7 @@
 function is_email($str)
 {
     $CI =& get_instance();
+    $CI->load->library('form_validation');
     $CI->form_validation->set_message('is_email', '%s must be a valid email address.');
     if (
     	strlen($str) <= 256
@@ -21,6 +22,8 @@ function is_email($str)
 
 function is_tel($str)
 {
+	$CI =& get_instance();
+	$CI->load->library('form_validation');
 	if (preg_match('/^\+[\d]{1,3}[\(\)\d\.a-z]+$/i', $str))
 	{
 		return true;
@@ -40,6 +43,7 @@ function min_value ($val,$min)
 {
 	settype($min, "float");
 	$CI =& get_instance();
+	$CI->load->library('form_validation');
 	$CI->form_validation->set_message('min_value', '%s must be at least '.$min.'.');
 	if ($min <= $val) return TRUE;
 	else return FALSE;
@@ -49,6 +53,7 @@ function max_value ($val,$max)
 {
 	settype($max, "float");
 	$CI =& get_instance();
+	$CI->load->library('form_validation');
 	$CI->form_validation->set_message('max_value', '%s must not exceed '.$max.'.');
 	if ($val > $max) return FALSE;
 	else return TRUE;
