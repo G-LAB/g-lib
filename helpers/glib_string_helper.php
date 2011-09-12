@@ -34,7 +34,7 @@ function tel_format($str = '')
 	
 }
 
-function tel_dialtring ($str)
+function tel_dialstring ($str)
 {
 	$str = tel_convert_vanity($str);
 	
