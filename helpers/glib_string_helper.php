@@ -4,13 +4,8 @@
 * NOTES TO SELF:
 * tel_convert_vanity and tel_dialtring should be good, but untested.  Add support for spaces as punctuation?
 * tel_format needs an overhaul.
-* phone_format needs to pass data to tel_format and trigger depreciated error.
+* tel_format needs to pass data to tel_format and trigger depreciated error.
 ***************************************/
-
-function phone_format()
-{
-	
-}
 
 function tel_format($str = '')
 {
