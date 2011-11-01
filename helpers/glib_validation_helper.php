@@ -24,7 +24,7 @@ function is_tel($str)
 {
 	$CI =& get_instance();
 	$CI->load->library('form_validation');
-	if (preg_match('/^\+[\d]{1,3}[\(\)\d\.a-z]+$/i', $str))
+	if (preg_match('/^\+[\d]{1,3}\s[\(\)\s\d\.a-z]+$/i', $str))
 	{
 		return true;
 	}
