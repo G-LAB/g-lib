@@ -9,14 +9,14 @@ function tel_format($str = null)
 	
 	// FORMAT
 	// International w/ Plus and Prefix
-	if (preg_match('/^\+[\d]{1,3}\s[\da-z\(\)\.\-]+/i', $str))
+	if (preg_match('/^\+[\d]{1,3}[\s\.]+[\da-z\(\)\.\-]+/i', $str))
 	{
-		return preg_replace("/\+([\da-z]{1,3})\s([\da-z]{3})[\-\)\.\s]?([\da-z]{3})[\-\)\.\s]?([\da-z]+)/i", "+$1 $2.$3.$4", $str);
+		return preg_replace("/\+([\da-z]{1,3})[\s\.]+([\da-z]{3})[\-\)\.\s]?([\da-z]{3})[\-\)\.\s]?([\da-z]*)/i", "+$1 $2.$3.$4", $str);
 	}
 	// US Domestic 10-Digit
-	elseif (preg_match('/^[\(]?[2-9]{1}[\d]{2}[\-\)\.\s]?[\da-z]{3}[\-\.\s]?[\da-z]{4}$/i', $str))
+	elseif (preg_match('/^\+?1?[\(]?[2-9]{1}[\d]{2}[\-\)\.\s]?[\da-z]{3}[\-\.\s]?[\da-z]{4}$/i', $str))
 	{
-		return preg_replace("/([\da-z]{3})[\-\)\.\s]?([\da-z]{3})[\-\)\.\s]?([\da-z]{4})/i", "+1 $1.$2.$3", $str);
+		return preg_replace("/\+?1?([\da-z]{3})[\-\)\.\s]?([\da-z]{3})[\-\)\.\s]?([\da-z]{4})/i", "+1 $1.$2.$3", $str);
 	}
 	else 
 	{
