@@ -31,7 +31,7 @@ function tel_dialstring ($str)
 	// International w/ Plus and Prefix
 	if (preg_match('/^\+[\d]{1,3}\s[\(\)\d\.a-z]+/i', $str))
 	{
-		return preg_replace('/[^\da-z\+]/i', '', $str);
+		return $str;
 	}
 	// US Domestic 10-Digit
 	elseif (preg_match('/^[\(]?[2-9]{1}[\d]{2}[\-\)\.\s]?[\da-z]{3}[\-\.\s]?[\da-z]{4}$/i', $str))
@@ -47,7 +47,7 @@ function tel_dialstring ($str)
 function tel_convert_vanity ($str) 
 {	
 	// Alpha-numeric Only
-	$str = preg_replace("/[^0-9A-Za-z\*]/", "", $str);
+	$str = preg_replace("/[^\+\s0-9A-Za-z\*]/", "", $str);
 	
 	// Assign Letters to Matching Numbers
 	$replace = array(	'2'=>array('a','b','c'),
